@@ -53,8 +53,14 @@ public class LoadSchematicCommand extends Command {
             return false;
         }
         String lastArg = strings[strings.length - 1];
-        double rotation = Double.parseDouble(lastArg);
-        if (Double.isNaN(rotation)) rotation = 0;
+        double rotation;
+
+        try {
+             rotation = Double.parseDouble(lastArg);
+        }
+        catch(NumberFormatException e) {
+            rotation = 0;
+        }
 
         String[] stringsCropped = new String[strings.length - 1];
         System.arraycopy(strings, 0, stringsCropped, 0, strings.length - 1);

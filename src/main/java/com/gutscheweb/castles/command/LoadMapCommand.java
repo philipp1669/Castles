@@ -27,6 +27,25 @@ public class LoadMapCommand extends Command {
             return false;
         }
 
+        String lastArg;
+
+        if (strings.length == 0) lastArg = "48";
+        else
+            lastArg = strings[strings.length - 1];
+        int distance;
+
+        try {
+            distance = Integer.parseInt(lastArg);
+        }
+        catch(NumberFormatException e) {
+            distance = 0;
+        }
+
+        if (distance < 0 || distance >= 1024) {
+            commandSender.sendMessage(mm.deserialize("<red>Invalid distance, set to 48</red>"));
+            distance = 48;
+        }
+
         Player player = (Player) commandSender;
 
         Location center = new Location(
@@ -48,8 +67,8 @@ public class LoadMapCommand extends Command {
         SchematicHandler castleHandler = new SchematicHandler(castleFile);
         SchematicHandler smallIslandHandler = new SchematicHandler(smallIslandFile);
 
-        Location castle1 = center.clone().add((smallIslandRadius + 24 + castleRadius) * -1, 0, 0);
-        Location castle2 = center.clone().add(smallIslandRadius + 24 + castleRadius, 0, 0);
+        Location castle1 = center.clone().add((smallIslandRadius + distance + castleRadius) * -1, 0, 0);
+        Location castle2 = center.clone().add(smallIslandRadius + distance + castleRadius, 0, 0);
 
         instance.getLogger().info(center + "\n" + castle1 + "\n" + castle2);
 
