@@ -1,0 +1,10 @@
+name: Castles
+version: '${project.version}'
+main: com.gutscheweb.castles.Castles
+api-version: '1.20'
+dependencies:
+  server:
+    WorldEdit:
+      load: BEFORE
+      required: true
+      join-classpath: true
