@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class StartGameCommand extends Command {
-    protected StartGameCommand(@NotNull String name) {
+    public StartGameCommand(@NotNull String name) {
         super("start", "starts the game", "/start", List.of("s"));
     }
 
