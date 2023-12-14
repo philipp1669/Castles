@@ -1,6 +1,5 @@
 package com.gutscheweb.castles.command;
 
-import com.gutscheweb.castles.util.SpawnUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -10,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class StartGameCommand extends Command {
-    public StartGameCommand(@NotNull String name) {
+    public StartGameCommand() {
         super("start", "starts the game", "/start", List.of("s"));
     }
 
