@@ -61,5 +61,7 @@ public class WorldCmd extends Command {
         world.setGameRule(GameRule.DO_WARDEN_SPAWNING, false);
         world.setGameRule(GameRule.MOB_GRIEFING, false);
         world.setGameRule(GameRule.SPAWN_RADIUS, 0);
+        world.setSpawnLocation(0, 100, 0);
+        //world.setSpawnLocation(new Location(world, 0.5, 100, 0.5));
     }
 }

@@ -1,8 +1,10 @@
 package com.gutscheweb.castles.command;
 
 import com.gutscheweb.castles.util.SchematicHandler;
+import com.gutscheweb.castles.util.SpawnUtil;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -69,6 +71,9 @@ public class LoadMapCommand extends Command {
 
         Location castle1 = center.clone().add((smallIslandRadius + distance + castleRadius) * -1, 0, 0);
         Location castle2 = center.clone().add(smallIslandRadius + distance + castleRadius, 0, 0);
+
+        SpawnUtil.placeBarrier(castle1, Material.BARRIER);
+        SpawnUtil.placeBarrier(castle2, Material.BARRIER);
 
         instance.getLogger().info(center + "\n" + castle1 + "\n" + castle2);
 
