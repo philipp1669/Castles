@@ -1,8 +1,10 @@
 package com.gutscheweb.castles.command;
 
+import com.gutscheweb.castles.game.Map;
 import com.gutscheweb.castles.util.SchematicHandler;
 import com.gutscheweb.castles.util.SpawnUtil;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -55,32 +57,18 @@ public class LoadMapCommand extends Command {
                 0, 64, 0
         );
 
-        String sep = File.separator;
-        File castleFile = new File(instance.getDataFolder() + sep + "castle.schem");
-        File smallIslandFile = new File(instance.getDataFolder() + sep + "small island.schem");
 
         double castleRadius = 24.5, smallIslandRadius = 11.5;
+        Location[] spawns = new Location[]{
+                center.clone().add((smallIslandRadius + castleRadius) * -1, 0, 0),
+                center.clone().add(smallIslandRadius + castleRadius, 0, 0)
+        };
 
-        if (!castleFile.exists() || !smallIslandFile.exists()) {
-            instance.saveResource("schematics/castle.schem", true); //24.5
-            instance.saveResource("schematics/smallisland.schem", true); //11.5
-        }
+        Map map = new Map(distance, center, spawns);
+        map.loadMap();
+        map.placeBarrier(Material.BARRIER);
 
-        SchematicHandler castleHandler = new SchematicHandler(castleFile);
-        SchematicHandler smallIslandHandler = new SchematicHandler(smallIslandFile);
-
-        Location castle1 = center.clone().add((smallIslandRadius + distance + castleRadius) * -1, 0, 0);
-        Location castle2 = center.clone().add(smallIslandRadius + distance + castleRadius, 0, 0);
-
-        SpawnUtil.placeBarrier(castle1, Material.BARRIER);
-        SpawnUtil.placeBarrier(castle2, Material.BARRIER);
-
-        instance.getLogger().info(center + "\n" + castle1 + "\n" + castle2);
-
-        castleHandler.paste(castle1, 0);
-        castleHandler.paste(castle2, 180);
-        smallIslandHandler.paste(center, 0);
-
+        Bukkit.getScheduler().scheduleSyncDelayedTask(instance, () -> map.placeBarrier(Material.AIR), 200L);
 
         return false;
     }
